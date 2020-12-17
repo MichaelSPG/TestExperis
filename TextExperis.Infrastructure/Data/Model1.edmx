@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TestExperisModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="sp_CheckInterviewIntersections" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SDate" Type="datetime" Mode="In" />
+          <Parameter Name="Duration" Type="smallint" Mode="In" />
+        </Function>
+        <Function Name="sp_GetCategoryList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GetTechnologyList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CategoryId" Type="bigint" Mode="In" />
+        </Function>
+        <EntityContainer Name="TestExperisModelStoreContainer" />
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestExperisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TestExperisEntities1" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="sp_CheckInterviewIntersections" ReturnType="Collection(TestExperisModel.sp_CheckInterviewIntersections_Result)">
+            <Parameter Name="SDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Duration" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetCategoryList" ReturnType="Collection(TestExperisModel.sp_GetCategoryList_Result)" />
+          <FunctionImport Name="sp_GetTechnologyList" ReturnType="Collection(TestExperisModel.sp_GetTechnologyList_Result)">
+            <Parameter Name="CategoryId" Mode="In" Type="Int64" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_CheckInterviewIntersections_Result">
+          <Property Type="Int64" Name="Interview_id" Nullable="false" />
+          <Property Type="Int64" Name="Interview_Applicant_Id" Nullable="false" />
+          <Property Type="Int64" Name="Interview_RecruiterUser_Id" Nullable="false" />
+          <Property Type="DateTime" Name="Interview_StartDate" Nullable="false" Precision="23" />
+          <Property Type="Int16" Name="Interview_Duration" Nullable="false" />
+          <Property Type="Int64" Name="Interview_InterMode_id" Nullable="false" />
+          <Property Type="Int64" Name="Interview_Category_Id" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_GetCategoryList_Result">
+          <Property Type="Int64" Name="Category_Id" Nullable="false" />
+          <Property Type="String" Name="Category_Name" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_GetTechnologyList_Result">
+          <Property Type="Int64" Name="Technology_Id" Nullable="false" />
+          <Property Type="Byte" Name="Technology_CodeId" Nullable="false" />
+          <Property Type="Int64" Name="Technology_Category_Id" Nullable="false" />
+          <Property Type="String" Name="Technology_Name" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestExperisModelStoreContainer" CdmEntityContainer="TestExperisEntities1" >
+          <FunctionImportMapping FunctionImportName="sp_CheckInterviewIntersections" FunctionName="TestExperisModel.Store.sp_CheckInterviewIntersections">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TestExperisModel.sp_CheckInterviewIntersections_Result">
+                <ScalarProperty Name="Interview_id" ColumnName="Interview_id" />
+                <ScalarProperty Name="Interview_Applicant_Id" ColumnName="Interview_Applicant_Id" />
+                <ScalarProperty Name="Interview_RecruiterUser_Id" ColumnName="Interview_RecruiterUser_Id" />
+                <ScalarProperty Name="Interview_StartDate" ColumnName="Interview_StartDate" />
+                <ScalarProperty Name="Interview_Duration" ColumnName="Interview_Duration" />
+                <ScalarProperty Name="Interview_InterMode_id" ColumnName="Interview_InterMode_id" />
+                <ScalarProperty Name="Interview_Category_Id" ColumnName="Interview_Category_Id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetCategoryList" FunctionName="TestExperisModel.Store.sp_GetCategoryList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TestExperisModel.sp_GetCategoryList_Result">
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+                <ScalarProperty Name="Category_Name" ColumnName="Category_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetTechnologyList" FunctionName="TestExperisModel.Store.sp_GetTechnologyList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TestExperisModel.sp_GetTechnologyList_Result">
+                <ScalarProperty Name="Technology_Id" ColumnName="Technology_Id" />
+                <ScalarProperty Name="Technology_CodeId" ColumnName="Technology_CodeId" />
+                <ScalarProperty Name="Technology_Category_Id" ColumnName="Technology_Category_Id" />
+                <ScalarProperty Name="Technology_Name" ColumnName="Technology_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

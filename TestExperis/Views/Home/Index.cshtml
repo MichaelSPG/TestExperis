@@ -1,0 +1,170 @@
+﻿@using TestExperis.Data;
+@model IEnumerable<TestExperis.Models.User>
+@{
+    ViewBag.Title = "Reclutamiento de profesionales";
+}
+
+<div class="jumbotron">
+
+    <div class="container text-center">
+        <p>Herramienta de reclutamiento</p>
+        <p></p>
+        <hr />
+    </div>
+
+    <h6>Elije una categor&iacute;a</h6>
+    <form asp-controller="Home" action="">
+        <div class="container text-center">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+
+                @foreach (var item in (IEnumerable<TestExperis.Data.Category>)ViewBag.Categories)
+                {
+                    <label class="btn btn-secondary active">
+                        @Html.RadioButton("category.Category_Id", item.Category_Id, ((long)ViewBag.SelectedCategory == item.Category_Id), new { onchange = "this.form.submit();" }) @Html.DisplayFor(modelItem => item.Category_Name)
+                    </label>
+                }
+
+            </div>
+        </div>
+        @if ((long)ViewBag.SelectedCategory != 0)
+        {
+            <div class="container">
+                <p>&nbsp;</p>
+                <h6>Filtrar candidatos por tecnolog&iacute;a, elije una o varias tecnolog&iacute;as</h6>
+                <p>&nbsp;</p>
+                <table class="table" id="Technologies">
+                    <tr>
+                        <th>
+                        </th>
+                        @foreach (var item in (List<Technology>)ViewBag.Technologies)
+                        {
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox"
+                                               name="Technologies"
+                                               value="@item.Technology_Id"
+                                               @if (((List<long>)ViewBag.SelectedTechnologies).Contains(item.Technology_Id)) { <text> checked </text>  }
+                                               />
+                                        @item.Technology_Name
+                                    </label>
+                                </div>
+                            </td>  
+                    }
+                    </table>
+                    <span class="text-danger" id="CategoriesError"></span>
+                    <div class="form-group text-center">
+                        <input id="btnSearch" type="submit" class="btn btn-secondary" value="Buscar" />
+                    </div>
+                    <hr />
+                </div>
+
+            }
+
+    </form>
+    <form action="Home/PerformSchedule">
+        <input type="hidden" name="SelectedCategory" value="@ViewBag.SelectedCategory" />
+        <div class="container">
+
+            @if (ViewBag.SelectedTechnologies != null && ((List<long>)ViewBag.SelectedTechnologies).Count > 0)
+            {
+                <p>A continuacion elija el o los candidatos a programar hora de entrevista...</p>
+                <p>&nbsp;</p>
+                <table class="table" id="Users">
+                    <tr>
+                        <th>
+
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.username)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.phone)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.website)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        
+                <tr>
+                    <div class="checkbox">
+                        <label>
+                            <td>
+
+                                <input type="checkbox"
+                                       name="SelectedUsers"
+                                       value="@item.id" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.website)
+                            </td>
+                        </label>
+                    </div>
+                </tr>
+                            
+                    }
+                </table>
+                <span class="error text-danger">.</span>
+                <div class="form-group text-center">
+                    <input id="btnSubmit" type="submit" class="btn btn-primary" value="Programar entrevistas" />
+                </div>
+            }
+        </div>
+    </form>
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(function () {
+            $("#btnSubmit").click(function () {
+                $(".error").text("");
+                var checked_checkboxes = $("#Users input[type=checkbox]:checked");
+                //alert(checked_checkboxes.length);
+                if (checked_checkboxes.length == 0) {
+                    $(".error").text("Por favor elije por lo menos a un usuario");
+                    return false;
+                }
+                return true;
+            });
+            $("#btnSearch").click(function () {
+                $("#CategoriesError").text("");
+                var checked_checkboxes = $("#Technologies input[type=checkbox]:checked");
+                //alert(checked_checkboxes.length);
+                if (checked_checkboxes.length == 0) {
+                    $("#CategoriesError").text("Debes elejir por lo menos una categoria");
+                    return false;
+                }
+                else {
+                    
+                }
+                return true;
+            });
+
+        });
+    </script>
+}

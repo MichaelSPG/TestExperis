@@ -1,0 +1,100 @@
+﻿@model TestExperis.Data.Interview
+
+@{
+    ViewBag.Title = "Perform scheduling";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+
+
+    <input type="hidden" asp-for="" name="Interview_Category_Id" value="@ViewBag.Interview_Category_Id" />
+    <input type="hidden" name="Interview_Applicant_Id" value="@ViewBag.Interview_Applicant_Id" />
+    <input type="hidden" name="Interview_RecruiterUser_Id" value="@ViewBag.Interview_RecruiterUser_Id" />
+    <div class="form-horizontal">
+        <h4 class="text-center">Programar entrevista</h4>
+        <hr />
+
+        <div class="jumbotron">
+            <div class="container text-center">
+                <p>Programar entrevista para @ViewBag.CurrentApplicantName</p>
+                <p></p>
+                <hr />
+            </div>
+            <table class="table">
+                <tr>
+                    <p class="text-center"><b>Fecha entrevista</b></p>
+                </tr>
+                <tr>
+                    <td>Fecha inicio</td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Interview_StartDate, "{0:yyyy-MM-ddThh:mm:ss}", new { @class = "form-control", type = "datetime-local" })
+                    </td>
+
+                    <td>Duraci&oacute;n en minutos</td>
+                    <td>
+                        @Html.EditorFor(model => model.Interview_Duration, new { htmlAttributes = new { type = "number", min = "15", max = "180", @class = "form-control", value = "15" } })
+                        Minutos
+                    </td>
+
+                </tr>
+                <tr>
+                    <td></td>
+                    <td> @Html.ValidationMessageFor(model => model.Interview_StartDate, "", new { @class = "text-danger" })</td>
+                    <td></td>
+                    <td> @Html.ValidationMessageFor(model => model.Interview_Duration, "", new { @class = "text-danger" })</td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="text-center">Modo de entrevista</p>
+
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.Interview_InterMode_id, new SelectList((List<TestExperis.Data.InterviewMode>)ViewData["InterviewModes"], "InterviewMode_id", "InterviewMode_Name"), "- SELECCIONE MODO DE ENTREVISTA -")
+                        @*<select name="Interview_InterMode_id" asp-items="ViewBag.InterviewModes" required class="form-control">
+                            <option value="" selected disabled hidden>SELECCIONE MODO ENTREVISTA...</option>
+                        </select>*@
+                    </td>
+                    <td> @Html.ValidationMessage("Interview_InterMode_id", "", new { @class = "text-danger" })</td>
+
+                </tr>
+
+                <tr>
+                    <td colspan="4"><span class="text-danger">@ViewBag.Result</span></td>
+                    <td colspan="4"><span class="text-success">@ViewBag.Success</span></td>
+                </tr>
+                <tr>
+                    <td colspan="4">@Html.ValidationSummary(true, "", new { @class = "text-danger" })</td>
+                </tr>
+            </table>
+            <div class="form-group text-center">
+                <input id="btnSubmit" type="submit" class="btn btn-success" value="Agendar" />
+            </div>
+        </div>
+    </div>
+
+
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(function () {
+
+            //$("#Interview.Interview_InterMode_id").val("hello");
+            //$("#Interview_InterMode_id").on("change", function () {
+            //    alert($(this).text());
+                
+            //    $("#Interview.Interview_InterMode_id").val($(this).text());
+            //    alert($("#Interview.Interview_InterMode_id").val);
+            //});
+        });
+    </script>
+}
