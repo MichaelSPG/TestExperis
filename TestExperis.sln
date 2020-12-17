@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestExperis", "TestExperis\TestExperis.csproj", "{264BE244-8C20-44E6-9FA9-C08F8BD90371}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextExperis.Infrastructure", "TextExperis.Infrastructure\TextExperis.Infrastructure.csproj", "{157B5554-A2D1-4439-AABA-78BC76DD1551}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{264BE244-8C20-44E6-9FA9-C08F8BD90371}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{264BE244-8C20-44E6-9FA9-C08F8BD90371}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{264BE244-8C20-44E6-9FA9-C08F8BD90371}.Release|Any CPU.Build.0 = Release|Any CPU
-		{157B5554-A2D1-4439-AABA-78BC76DD1551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{157B5554-A2D1-4439-AABA-78BC76DD1551}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{157B5554-A2D1-4439-AABA-78BC76DD1551}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{157B5554-A2D1-4439-AABA-78BC76DD1551}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
